@@ -1,0 +1,13 @@
+services:
+  app:
+    container_name: app
+    build: ./web_app
+    command: python ./web_app/controller.py
+    ports:
+      - "5000:5000"
+    links:
+      - db
+    volumes:
+      - .:/web_app
+  db:
+    container_name: db
