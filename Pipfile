@@ -9,6 +9,7 @@ black = "*"
 flask = "*"
 tomli = "*"
 typing-extensions = "*"
+dill = "*"
 
 [dev-packages]
 
