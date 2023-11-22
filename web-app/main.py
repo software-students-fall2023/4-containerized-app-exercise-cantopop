@@ -8,4 +8,3 @@ app = Flask(__name__)
 def hello_world():
     """Return a 'Hello, World!' string."""
     return 'Hello, World!'
-
