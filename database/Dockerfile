@@ -1,16 +1,16 @@
-FROM python:3.9-bullseye
-
+FROM python:3.8
 #set work directory insideimage
-WORKDIR /any
+WORKDIR /app
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
 
 # copy current dir contents into image dir
-ADD . /any
-
+ADD . /app
 RUN pip install --upgrade pip
 RUN apt -y update
 RUN pip install pymongo
 ENV DATA_OP=database.py
-COPY . .
+COPY . /app
 
 EXPOSE 4000
 

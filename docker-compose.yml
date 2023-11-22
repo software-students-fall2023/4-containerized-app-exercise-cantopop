@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: ./web-app  # Points to the directory of the web app's Dockerfile
+    ports:
+      - "5000:5000"  # Exposes port 5000 for web access
+    environment:
+      - FLASK_APP=app.py  # Flask entry point
+    depends_on:
+      - db
+    volumes:
+      - ./web-app:/app  # Mounts the web-app directory to the container's /app directory
+
+  db:
+    container_name: db
+    image: mongo:latest  # Uses the latest MongoDB image from Docker Hub
+    ports:
+      - "27017:27017"  # Exposes MongoDB's default port
+    volumes:
+      - dbdata:/data/db  # Persistent volume for MongoDB data
+
+volumes:
+  dbdata:  # Defines the persistent volume for MongoDB
