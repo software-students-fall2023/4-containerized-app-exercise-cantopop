@@ -12,11 +12,12 @@ def hello_world():
 
 @app.route('/capture')
 def capture():
+    """Capture an image and display it on the web page."""
     try:
         frame = capture_image()
         save_image(frame, 'static/captured.jpg')
         return render_template('capture.html', image_path='static/captured.jpg')
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         return str(e)
 
 if __name__ == '__main__':
