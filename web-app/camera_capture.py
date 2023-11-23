@@ -2,6 +2,7 @@
 
 import cv2
 
+
 def capture_image():
     """
     Captures an image from the default camera.
@@ -18,6 +19,7 @@ def capture_image():
 
     finally:
         cap.release()
+
 
 def save_image(image, filename="captured_image.jpg"):
     """
