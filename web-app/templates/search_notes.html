@@ -89,9 +89,10 @@
             {% for doc in docs %}
             <ul>
                 <li><b>Title:</b> {{doc.title}}</li>
-                <li><textarea>{{doc.main_body}}</textarea></li>
-                <a href="{{ url_for('edit_notes') }}"><button style="background-color: #3a3a3a; margin-left: 20px;">Edit</button></a>
-                <a href="{{ url_for('delete_note') }}"><button style="background-color: #3a3a3a; margin-left: 20px;">Delete</button></a>
+                <li><p>{{doc.main_body}}</p></li>
+                <a href="{{ url_for('show_edit_note'), title = doc.title}}"><button style="background-color: #3a3a3a; margin-left: 20px;">Edit</button></a>
+                <a href="{{ url_for('show_delete_note') }}"><button style="background-color: #3a3a3a; margin-left: 20px;">Delete</button></a>
+                <br>
             </ul>
             {% endfor %}
         </div>
