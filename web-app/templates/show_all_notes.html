@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Courses @NYU</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        } 
+
+        header {
+            background-color: #57068c;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main{
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        } 
+
+        ul {
+            border: 3px solid #ddd;
+            list-style-type: none;
+            padding: 0;
+            border-radius: 8px;
+        }
+
+        li {
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📘 All Notes</h1>
+    </header>
+    
+    <main>
+        {%if docs is defined and docs%}
+        {% for doc in docs %}
+        <ul>
+            <li><b>Title:</b> {{doc.title}}</li>
+            <li><b>Main Body:</b> {{doc.main_body}}</li>
+        </ul>
+        {% endfor %}
+        {% else %}
+            <h3>No Notes Added Yet</h3>
+        {% endif %}
+        <a href="{{ url_for('show_main_screen') }}"><button style="background-color: #3a3a3a; margin-top: 5px;">Back</button></a>
+    </main>
+
+</body>
+</html>
