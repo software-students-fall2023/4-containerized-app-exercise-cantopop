@@ -62,13 +62,17 @@
         }
 
         li {
-            margin-left: 5px;
-            margin-right: 5px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 8px;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        max-width: 100%; /* Set a maximum width */
+        word-wrap: break-word; /* Break long words */
+        overflow-wrap: break-word; /* Ensures overflow text is broken */
+        padding: 15px; /* Add padding inside li for readability */
         }
     </style>
 </head>
@@ -90,9 +94,9 @@
             <ul>
                 <li><b>Title:</b> {{doc.title}}</li>
                 <li><p>{{doc.main_body}}</p></li>
-                <a href="{{ url_for('show_edit_note'), title = doc.title}}"><button style="background-color: #3a3a3a; margin-left: 20px;">Edit</button></a>
-                <a href="{{ url_for('show_delete_note') }}"><button style="background-color: #3a3a3a; margin-left: 20px;">Delete</button></a>
-                <br>
+                <li><a href="{{ url_for('show_edit_note', title = doc.title) }}"><button style="background-color: #3a3a3a; margin-top: 5px;">edit</button></a>
+                <a href="{{ url_for('delete_note', title = doc.title) }}"><button style="background-color: #3a3a3a; margin-top: 5px;">delete</button></a></li>
+                
             </ul>
             {% endfor %}
         </div>
