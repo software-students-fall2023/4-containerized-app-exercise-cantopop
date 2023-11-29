@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from camera_capture import capture_image, save_image
 import os
 
 app = Flask(__name__)
 #uri = os.getenv('MONGODB_URI')
-uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&tlsInsecure=true"
+uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
 connection = MongoClient(uri, server_api=ServerApi('1'))
 db = connection["note_app"]
 notes = db.notes
@@ -19,25 +18,23 @@ def show_main_screen():
 def show_add_notes():
     return render_template('add_notes.html', message = "")
 
-@app.route('/add', methods=['GET', 'POST'])
+@app.route('/add', methods=['POST'])
 def add_notes():
-    if request.method == 'POST':
-        if 'capture' in request.form:
-            # Camera capture logic
-            frame = capture_image()
-            if frame is not None:
-                image_path = os.path.join('static', 'captured_image.jpg')
-                save_image(frame, image_path)
-                return render_template('add_notes.html', message="Captured Successfully", image_path=image_path)
-            else:
-                return render_template('add_notes.html', message="Failed to capture image")
-        else:
-            # Add note logic
-            title = request.form['title']
-            main_body = request.form['main_body']
-            # ... existing logic for adding notes ...
-            return render_template('add_notes.html', message="Added Successfully")
-    return render_template('add_notes.html', message="")
+    title = request.form['title']
+    main_body = request.form['main_body']
+
+    dup = 0
+    static_title = title
+    while(notes.count_documents({"title": title})):
+        dup += 1
+        title = static_title + "_" + str(dup)
+
+    doc = {
+        "title" : title,
+        "main_body" : main_body,
+        }
+    notes.insert_one(doc)
+    return render_template('add_notes.html', message = "Added Successfully")
 
 @app.route('/show_edit_note')
 def show_edit_note():
@@ -89,3 +86,6 @@ def search_notes():
     if found == []:
         return render_template("search_notes.html", message ="Notes Not Found")
     return render_template("search_notes.html", docs = found, message ="")
+
+
+    

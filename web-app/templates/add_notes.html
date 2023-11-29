@@ -91,15 +91,14 @@
     </header>
     <main>
         <form action="{{ url_for('add_notes') }}" id="productForm" method="post">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required><br>
-    
-            <label for="main_body">Main Body:</label>
-            <textarea id="main_body" name="main_body" required></textarea><br>
-
-            <button type="submit">Add Notes</button>
+            <!-- ... existing form fields ... -->
+            <button type="submit" name="submit">Add Notes</button>
+            <button type="submit" name="capture">Capture Image</button>
             <h3>{{message}}</h3>
         </form>
+        {% if image_path %}
+        <img src="{{ url_for('static', filename=image_path.split('/')[-1]) }}" alt="Captured Image">
+        {% endif %}
         <a href="{{ url_for('show_main_screen') }}"><button style="background-color: #3a3a3a; margin-left: 20px;">Back</button></a>
     </main>
 </body>
