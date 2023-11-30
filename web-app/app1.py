@@ -1,14 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from werkzeug.utils import secure_filename
+import traceback
 import os
+import base64
+import traceback
 
 app = Flask(__name__)
 #uri = os.getenv('MONGODB_URI')
-uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
+uri = "mongodb+srv://brad:cam@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
 connection = MongoClient(uri, server_api=ServerApi('1'))
 db = connection["note_app"]
-notes = db.notes
+notes = db.temp
 
 @app.route('/')
 def show_main_screen():
@@ -20,21 +24,41 @@ def show_add_notes():
 
 @app.route('/add', methods=['POST'])
 def add_notes():
-    title = request.form['title']
-    main_body = request.form['main_body']
+    try:
+        data = request.get_json()
 
-    dup = 0
-    static_title = title
-    while(notes.count_documents({"title": title})):
-        dup += 1
-        title = static_title + "_" + str(dup)
+        if data and 'imageData' in data:
+            image_data = data['imageData']
+            header, encoded = image_data.split(",", 1)
+            binary_data = base64.b64decode(encoded)
 
-    doc = {
-        "title" : title,
-        "main_body" : main_body,
-        }
-    notes.insert_one(doc)
-    return render_template('add_notes.html', message = "Added Successfully")
+            static_dir = 'static'
+            if not os.path.exists(static_dir):
+                os.makedirs(static_dir)
+
+            image_path = os.path.join(static_dir, 'captured.jpg')
+            with open(image_path, 'wb') as file:
+                file.write(binary_data)
+
+            title = data.get('title', 'Untitled')
+            main_body = data.get('main_body', '')
+
+            # MongoDB document creation
+            doc = {
+                "title": title,
+                "main_body": main_body,
+                "image_path": image_path
+            }
+            result = notes.insert_one(doc)
+            print("Inserted ID:", result.inserted_id)
+
+            return render_template('add_notes.html', message="Note and Image Added Successfully", image_path=image_path)
+        else:
+            return render_template('add_notes.html', message="No image data received")
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/show_edit_note')
 def show_edit_note():
@@ -87,5 +111,5 @@ def search_notes():
         return render_template("search_notes.html", message ="Notes Not Found")
     return render_template("search_notes.html", docs = found, message ="")
 
-
-    
+if __name__ == '__main__':
+    app.run(debug=True)
