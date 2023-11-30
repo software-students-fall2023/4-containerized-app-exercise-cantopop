@@ -11,6 +11,8 @@ tomli = "*"
 typing-extensions = "*"
 dill = "*"
 opencv-python-headless = "*"
+opencv-python = "*"
+pymongo = "*"
 
 [dev-packages]
 
