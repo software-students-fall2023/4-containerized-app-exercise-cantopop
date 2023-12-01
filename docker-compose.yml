@@ -1,24 +1,31 @@
-version: '3.10'
+version: "3.10"
 
 services:
   app:
-    container_name: app
-    build: 
-      context: ./web-app  # Points to the web-app directory containing the Dockerfile
+    # container_name: app
+    build: ./web-app  # Points to the web-app directory containing the Dockerfile
     ports:
-      - "5000:5000"
+      - "3000:3000"
     environment:
       - FLASK_APP=main.py
+      - DB_URL=mongodb://mongodb:27017
     volumes:
       - ./web-app:/app  # Mounts the web-app directory to the container's /app directory
     depends_on:
-      - db
+      - mongodb
+  
+  ml:
+    build: ./machine-learning-client
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
 
-  db:
-    container_name: db
+  mongodb:
+    # container_name: db
     image: mongo:latest
-    volumes:
-      - ./db/languages.js:/docker-entrypoint-languages.d/languages.js:ro 
+    # volumes:
+      # - ./db/languages.js:/docker-entrypoint-languages.d/languages.js:ro 
     ports:
       - "27017:27017"
 
