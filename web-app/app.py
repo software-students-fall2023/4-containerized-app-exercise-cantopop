@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import os
+import base64
+
 
 app = Flask(__name__)
 #uri = os.getenv('MONGODB_URI')
@@ -9,14 +10,39 @@ uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=tr
 connection = MongoClient(uri, server_api=ServerApi('1'))
 db = connection["note_app"]
 notes = db.notes
+temp = db.temp
 
 @app.route('/')
 def show_main_screen():
-   return render_template('main_screen.html')
+    return render_template('main_screen.html')
+
+@app.route('/capture_image')
+def capture_image():
+    return render_template('camera.html')
+
+@app.route('/upload_image', methods=['POST'])
+def upload_image():
+    data = request.get_json()
+    if data and 'imageData' in data:
+        image_data = data['imageData']
+        header, encoded = image_data.split(",", 1)
+        binary_data = base64.b64decode(encoded)
+
+        doc = {
+            "title" : "",
+            "main_body" : "",
+            "processed" : False,
+            "raw_image" : binary_data
+        }
+        temp.insert_one(doc)
+    return
 
 @app.route('/add')
 def show_add_notes():
-    return render_template('add_notes.html', message = "")
+    while (temp.find_one({}) == None) or (temp.find_one({})["processed"] == False):
+        pass
+    doc = temp.find_one_and_delete({})
+    return render_template('add_notes.html', title = doc["title"], main_body = doc["main_body"])
 
 @app.route('/add', methods=['POST'])
 def add_notes():
@@ -86,6 +112,3 @@ def search_notes():
     if found == []:
         return render_template("search_notes.html", message ="Notes Not Found")
     return render_template("search_notes.html", docs = found, message ="")
-
-
-    
