@@ -13,7 +13,7 @@ dill = "*"
 opencv-python-headless = "*"
 opencv-python = "*"
 pymongo = "*"
-base64 = "*"
+pybase64 = "*"
 
 [dev-packages]
 
