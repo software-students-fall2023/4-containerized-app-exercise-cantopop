@@ -21,7 +21,7 @@ RUN pip install pipenv
 
 RUN pipenv --clear
 
-RUN pip install Flask
+RUN pip install flask
 
 # RUN pipenv shell
 
@@ -38,7 +38,7 @@ ENV MONGO_URI=mongodb://mongodb:27017
 
 # CMD ["flask", "run"]
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+CMD [ "python3", "-m" , "flask", "run"]
 
 # RUN ["flask", "run"]
 # ENTRYPOINT ["flask"]
