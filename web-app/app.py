@@ -35,7 +35,7 @@ def upload_image():
             "raw_image" : binary_data
         }
         temp.insert_one(doc)
-    return
+    return render_template("buffer.html")
 
 @app.route('/add')
 def show_add_notes():
