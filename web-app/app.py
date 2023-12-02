@@ -5,10 +5,8 @@ import base64
 
 
 app = Flask(__name__)
-uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
-connection = MongoClient(uri)
 #uri = os.getenv('MONGODB_URI')
-uri = "mongodb+srv://ry2050:cam@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
+uri = "mongodb+srv://brad:cam@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
 connection = MongoClient(uri, server_api=ServerApi('1'))
 db = connection["note_app"]
 notes = db.notes
@@ -66,10 +64,15 @@ def add_notes():
 
 @app.route('/show_edit_note')
 def show_edit_note():
-    title = request.args.get('title')
-    doc = notes.find_one({"title": title})
-    main_body = doc["main_body"]
-    return render_template("edit_note.html", title = title, main_body = main_body)
+    with app.app_context():
+        title = request.args.get('title')
+        doc = app.config['db'].notes.find_one({"title": title})
+        if doc is None:
+            return "Note not found", 404
+
+        main_body = doc["main_body"]
+        return render_template("edit_note.html", title=title, main_body=main_body)
+
 
 @app.route('/edit_confirm/<title>', methods=['POST'])
 def edit_note_confirm(title):
