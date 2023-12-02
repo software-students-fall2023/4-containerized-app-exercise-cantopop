@@ -35,7 +35,7 @@ This is the different configrations for tesseract
 """
 
 def mlc(raw_image):
-    # # This is the config I found most reliable
+    # # This is the config I found most reliable, do not change!
     myconfig = r"--psm 6 --oem 3"
 
     img = Image.open(BytesIO(raw_image))
