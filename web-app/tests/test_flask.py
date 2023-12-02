@@ -17,39 +17,24 @@ def client(app):
 def mock_db(app):
     with app.app_context():
         db = app.config['db']
-
-        # Print before insertion
         print("Before Insertion: ", list(db.notes.find({})))
-
-        # Insert mock data
         db.notes.insert_one({'title': 'Note Title', 'main_body': 'Test body'})
-
-        # Print after insertion
         print("After Insertion: ", list(db.notes.find({})))
-
         yield db
-
-        # Cleanup
         db.notes.delete_one({'title': 'Note Title'})
-
-        # Print after cleanup
         print("After Cleanup: ", list(db.notes.find({})))
-
-
 
 def test_show_main_screen(client):
     response = client.get('/')
     assert response.status_code == 200
-    # Replace with a specific content check from your main_screen.html
     assert b'Easy Note' in response.data
 
 def test_capture_image(client):
     response = client.get('/capture_image')
     assert response.status_code == 200
-    assert b'<title>Add Course</title>' in response.data  # Adjusted to check for specific content
+    assert b'<title>Add Course</title>' in response.data
 
 def test_upload_image(client, app):
-    # Use valid base64 encoded data for the test
     valid_base64_image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
     mock_image = {'imageData': valid_base64_image}
     response = client.post('/upload_image', json=mock_image)
