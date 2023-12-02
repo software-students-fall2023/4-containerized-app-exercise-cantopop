@@ -168,3 +168,4 @@ def search_notes():
     if not found:
         return render_template("search_notes.html", message="Notes Not Found")
     return render_template("search_notes.html", docs=found, message="")
+    
