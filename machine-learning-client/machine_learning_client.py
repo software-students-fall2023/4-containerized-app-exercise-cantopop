@@ -55,7 +55,7 @@ def mlc(raw_image):
     return title, content
 
 #Connecting to MongoDB
-# pylint: disable=line-too-long
+#pylint: disable=line-too-long
 MONGO_URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
 client = MongoClient(MONGO_URI)
 #Accessing
