@@ -4,9 +4,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-
 URI = "mongodb+srv://brad:cam@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
 connection = MongoClient(URI, server_api=ServerApi('1'))
+#uri = os.getenv('MONGODB_URI')
 db = connection["note_app"]
 notes = db.notes
 temp = db.temp
