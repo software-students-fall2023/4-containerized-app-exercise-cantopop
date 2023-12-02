@@ -15,6 +15,7 @@ db = connection["note_app"]
 notes = db.notes
 temp = db.temp
 
+
 @app.route("/")
 def show_main_screen():
     """
@@ -22,7 +23,7 @@ def show_main_screen():
     """
     return render_template("main_screen.html")
 
-  
+
 @app.route("/capture_image")
 def capture_image():
     """
@@ -30,7 +31,7 @@ def capture_image():
     """
     return render_template("camera.html")
 
-  
+
 @app.route("/upload_image", methods=["POST"])
 def upload_image():
     """
@@ -65,7 +66,7 @@ def show_add_notes():
         "add_notes.html", title=doc["title"], main_body=doc["main_body"]
     )
 
-  
+
 @app.route("/add", methods=["POST"])
 def add_notes():
     """
@@ -73,8 +74,8 @@ def add_notes():
     """
     title = request.form["title"]
     main_body = request.form["main_body"]
+
     dup = 0
-    
     static_title = title
     while notes.count_documents({"title": title}):
         dup += 1
@@ -86,7 +87,7 @@ def add_notes():
     }
     notes.insert_one(doc)
     return render_template("add_notes.html", message="Added Successfully")
-  
+
 
 @app.route("/show_edit_note")
 def show_edit_note():
@@ -106,7 +107,6 @@ def edit_note_confirm(title):
     @param title := the original title
     """
     new_title = request.form["title"]
-    
     dup = 0
     static_title = new_title
     while notes.count_documents({"title": new_title}) and new_title != title:
