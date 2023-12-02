@@ -6,8 +6,9 @@ from pymongo.server_api import ServerApi
 
 
 app = Flask(__name__)
-uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
-connection = MongoClient(uri)
+#uri = os.getenv('MONGODB_URI')
+uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
+connection = MongoClient(uri, server_api=ServerApi('1'))
 db = connection["note_app"]
 notes = db.notes
 temp = db.temp
