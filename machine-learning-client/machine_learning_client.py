@@ -1,14 +1,6 @@
-import time
-from pymongo import MongoClient
-from bson import ObjectId
-import base64
-from io import BytesIO
-import tempfile
-import pytesseract
-from pytesseract import Output
-from PIL import Image
-
 """
+This is the machine learning client for our project
+
 This is the different configrations for tesseract
 
 #Page segmentation modes:
@@ -33,15 +25,24 @@ This is the different configrations for tesseract
 #2 = Legacy + LSTM engines.
 #3 = Default, based on what is available.
 """
+import time
+from io import BytesIO
+from pymongo import MongoClient
+import pytesseract
+from PIL import Image
 
 def mlc(raw_image):
-    # # This is the config I found most reliable, do not change!
-    myconfig = r"--psm 6 --oem 3"
+
+    """
+    This is the main application of the ML client, we applied the use of Tesseract here.
+    """
+    #This is the config I found most reliable, do not change!
+    #myconfig = r"--psm 6 --oem 3"
 
     img = Image.open(BytesIO(raw_image))
 
     #Getting the words...
-    text = pytesseract.image_to_string(img )
+    text = pytesseract.image_to_string(img)
 
     #Split the text into lines
     lines = text.split('\n')
@@ -51,35 +52,34 @@ def mlc(raw_image):
     title = lines[0]
     #content is the remaining of the paragraph
     content = '\n'.join(lines[1:])
-    print(title)
-    print(content)
     return title, content
 
 #Connecting to MongoDB
-mongo_uri = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
-client = MongoClient(mongo_uri)
+# pylint: disable=line-too-long
+MONGO_URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
+client = MongoClient(MONGO_URI)
 #Accessing
 database = client["note_app"]
 #Accessing
 collection = database["temp"]
 
 while True:
-    while collection.find_one() == None:
+    while collection.find_one() is None:
         pass
     document_to_update = collection.find_one()
-    desired_key = 'raw_image'
-    desired_value = document_to_update[desired_key]
-    new_title, new_content = mlc(desired_value)
+    DESIRED_KEY = 'raw_image'
+    DESIRED_VALUE = document_to_update[DESIRED_KEY]
+    new_title, new_content = mlc(DESIRED_VALUE)
     if document_to_update:
-            collection.update_one(
-                {'_id': document_to_update['_id']},  # Assuming the document has an _id field
-                {'$set': {
-                    'title': new_title,
-                    'main_body': new_content,
-                    'processed': True
-                    }
+        collection.update_one(
+            {'_id': document_to_update['_id']},  # Assuming the document has an _id field
+            {'$set': {
+                'title': new_title,
+                'main_body': new_content,
+                'processed': True
                 }
-            )
+            }
+        )
     # Wait for a specific interval before checking again (e.g., 1 second)
     time.sleep(1)
 
