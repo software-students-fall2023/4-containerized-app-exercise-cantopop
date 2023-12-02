@@ -51,8 +51,6 @@ def mlc(raw_image):
     title = lines[0]
     #content is the remaining of the paragraph
     content = '\n'.join(lines[1:])
-    print(title)
-    print(content)
     return title, content
 
 #Connecting to MongoDB
