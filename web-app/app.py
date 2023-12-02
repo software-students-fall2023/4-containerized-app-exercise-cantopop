@@ -39,7 +39,7 @@ def upload_image():
 
 @app.route('/add')
 def show_add_notes():
-    while (temp.find_one({}) == None) or (temp.find_one({})["processed"] == False):
+    while temp.find_one({"processed" : True}) == None:
         pass
     doc = temp.find_one_and_delete({})
     return render_template('add_notes.html', title = doc["title"], main_body = doc["main_body"])
