@@ -81,3 +81,9 @@ def test_search_notes(client, create_app):
     mock_search_data = {'keywords': 'Test Query'}
     response = client.post('/search', data=mock_search_data)
     assert response.status_code == 200
+
+def test_add_notes_post(client, mock_db):
+    """Test adding a new note via POST request."""
+    new_note = {'title': 'New Note', 'main_body': 'This is a new note.'}
+    response = client.post('/add', data=new_note)
+    assert response.status_code == 200
