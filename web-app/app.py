@@ -2,15 +2,18 @@
 base64: provides function that can convert image into mongodb compatible format
 flask: web-app frame work
 pymongo: provide connection to the mongodb
+os: retreiving env var
 """
+# import os
 import base64
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo.mongo_client import MongoClient
 
 app = Flask(__name__)
-# uri = os.getenv('MONGODB_URI')
+# URI = os.getenv("MONGODB_URI")
 URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
-connection = MongoClient(URI)
+app.config["MONGO_URI"] = URI
+connection = MongoClient(app.config["MONGO_URI"])
 db = connection["note_app"]
 notes = db.notes
 temp = db.temp
@@ -168,4 +171,3 @@ def search_notes():
     if not found:
         return render_template("search_notes.html", message="Notes Not Found")
     return render_template("search_notes.html", docs=found, message="")
-    

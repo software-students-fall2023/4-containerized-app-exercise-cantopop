@@ -17,8 +17,10 @@ pybase64 = "*"
 certifi = "*"
 pytesseract = "*"
 pillow = "*"
+pytest = "*"
+pytest-cov = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"
