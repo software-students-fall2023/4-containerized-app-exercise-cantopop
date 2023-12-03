@@ -6,6 +6,7 @@ os: retreiving env var
 """
 # import os
 import base64
+import certifi
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo.mongo_client import MongoClient
 
@@ -13,7 +14,8 @@ app = Flask(__name__)
 # URI = os.getenv("MONGODB_URI")
 URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
 app.config["MONGO_URI"] = URI
-connection = MongoClient(app.config["MONGO_URI"])
+
+connection = MongoClient(app.config["MONGO_URI"], tlsCAFile=certifi.where())
 db = connection["note_app"]
 notes = db.notes
 temp = db.temp
