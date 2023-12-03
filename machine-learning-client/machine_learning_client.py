@@ -38,49 +38,78 @@ def mlc(raw_image):
     """
     # This is the config I found most reliable, do not change!
     # myconfig = r"--psm 6 --oem 3"
+    try:
+        img = Image.open(BytesIO(raw_image))
 
-    img = Image.open(BytesIO(raw_image))
+        # Getting the words...
+        try:
+            text = pytesseract.image_to_string(img)
+        # pylint: disable=broad-except
+        # pylint: disable=unused-variable
+        except Exception as e:
+            title = "Cannot recognize title!"
+            content = "Cannot recognize main body!"
+            # Handle the specific exception
+            return title, content
 
-    # Getting the words...
-    text = pytesseract.image_to_string(img)
-
-    # Split the text into lines
-    lines = text.split("\n")
-
-    # Separate the first line from the rest
-    # title is the title (by default, the first line)
-    title = lines[0]
-    # content is the remaining of the paragraph
-    content = "\n".join(lines[1:])
-    return title, content
-
-
-# Connecting to MongoDB
-# pylint: disable=line-too-long
-MONGO_URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
-client = MongoClient(MONGO_URI)
-# Accessing
-database = client["note_app"]
-# Accessing
-collection = database["temp"]
-
-while True:
-    while collection.find_one() is None:
-        pass
-    document_to_update = collection.find_one()
-    DESIRED_KEY = "raw_image"
-    DESIRED_VALUE = document_to_update[DESIRED_KEY]
-    new_title, new_content = mlc(DESIRED_VALUE)
-    if document_to_update:
-        collection.update_one(
-            {
-                "_id": document_to_update["_id"]
-            },  # Assuming the document has an _id field
-            {"$set": {"title": new_title, "main_body": new_content, "processed": True}},
-        )
-    # Wait for a specific interval before checking again (e.g., 1 second)
-    time.sleep(1)
+        # Split the text into lines
+        lines = text.split("\n")
+        # Separate the first line from the rest
+        # title is the title (by default, the first line)
+        title = lines[0]
+        # content is the remaining of the paragraph
+        content = "\n".join(lines[1:])
+        if title == "" or content == "":
+            title = "Cannot recognize title!"
+            content = "Cannot recognize main body!"
+            return title, content
+        return title, content
+    # pylint: disable=broad-except
+    except Exception as e:
+        title = "ERROR in raw_image format!"
+        content = "ERROR in raw_image format!"
+        return title, content
 
 
-# Close the MongoDB connection
-client.close()
+def connection(flag):
+    """This is the connection client to MongoDB"""
+    # Connecting to MongoDB
+    # pylint: disable=line-too-long
+    mongourl = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
+    client = MongoClient(mongourl)
+    # Accessing
+    database = client["note_app"]
+    # Accessing
+    collection = database["temp"]
+    while flag:
+        # collection.delete_many({})
+        while collection.find_one() is None:
+            pass
+        new_title, new_content = mlc(collection.find_one()["raw_image"])
+        if collection.find_one():
+            collection.update_one(
+                {
+                    "_id": collection.find_one()["_id"]
+                },  # Assuming the document has an _id field
+                {
+                    "$set": {
+                        "title": new_title,
+                        "main_body": new_content,
+                        "processed": True,
+                    }
+                },
+            )
+        # Wait for a specific interval before checking again (e.g., 1 second)
+        time.sleep(1)
+    # Close the MongoDB connection
+    client.close()
+
+
+def main(flag):
+    """Main file"""
+    connection(flag)
+
+
+if __name__ == "__main__":
+    FLAG_CON = True  # Set the flag based on your specific use case
+    main(FLAG_CON)
