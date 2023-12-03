@@ -1,5 +1,6 @@
 """This is the testing module for machine_learning_client"""
 
+import os
 from unittest.mock import patch, MagicMock
 from PIL import Image
 import pytest
@@ -13,11 +14,11 @@ def example_image():
     with patch("machine_learning_client.Image.open") as mock_open:
         mock_bytesio_instance = MagicMock()
         mock_open.return_value = Image.open(mock_bytesio_instance)
-
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        example_photo_path = os.path.join(current_directory, "testcase.jpg")
         # Read the image file and encode it in base64
-        with open("testcase.jpg", "rb") as image_file:
+        with open(example_photo_path, "rb") as image_file:
             image_data = image_file.read()
-
         # Return the actual image data
         return image_data
 
