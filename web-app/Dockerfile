@@ -17,13 +17,28 @@ ENV FLASK_RUN_HOST==0.0.0.0
 
 COPY  . /web-app
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install pipenv
+
+RUN pipenv --clear
+
+RUN pip install flask
+
+# RUN pipenv shell
+
+# RUN pipenv install
+
+# RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
 
-COPY . .
+# COPY . .
 
 #Necessary? vvv
 ENV MONGO_URI=mongodb://mongodb:27017
 
-CMD ["flask", "run"]
+# CMD ["flask", "run"]
+
+CMD [ "python3", "-m" , "flask", "run"]
+
+# RUN ["flask", "run"]
+# ENTRYPOINT ["flask"]

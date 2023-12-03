@@ -13,15 +13,8 @@ dill = "*"
 opencv-python-headless = "*"
 opencv-python = "*"
 pymongo = "*"
-pybase64 = "*"
-certifi = "*"
-pytesseract = "*"
-pillow = "*"
-pytest = "*"
-pytest-cov = "*"
-
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version >= "3.10"
