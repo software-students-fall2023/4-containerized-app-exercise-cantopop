@@ -10,14 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Repository
         uses: actions/checkout@v2
-      - name: Deploy to Digital Ocean
+      - name: Digital Ocean
         run: |
-          mkdir -p ~/.ssh
+          export SSHPASS='Cd#234GG'
           ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
-          sshpass -p 'Bread#69Lover' ssh -o StrictHostKeyChecking=no root@159.203.121.138 "
-          cd 4-containerized-app-exercise-cantopop && 
+          sshpass -e ssh -t root@159.203.121.138 
+          "cd 4-containerized-app-exercise-cantopop && 
           git pull && 
           docker-compose down && 
-          docker-compose up -d --build "|| true
+          docker-compose up -d --build"
+
