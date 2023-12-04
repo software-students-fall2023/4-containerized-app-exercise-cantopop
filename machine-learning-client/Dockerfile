@@ -1,6 +1,6 @@
 FROM python:3.10
 
-WORKDIR ./machine_learning_client
+WORKDIR /machine_learning_client
 
 COPY . .
 
@@ -20,12 +20,16 @@ RUN pip install pipenv
 RUN pipenv install 
 
 
+RUN pip install --no-cache-dir -r requirements.txt
+
 
 EXPOSE 3001
 
 #Necessary? vvv
-ENV MONGO_URI=mongodb://mongodb:27017
+#MONGO_URI or MONGODB_URI, database as well
+ENV MONGODB_URI="mongodb://mongodb:27017"
+ENV MONGODB_DATABASE="notes_app"
 
 # CMD ["python3", "machine_learning_code.py"]
 
-CMD ["pipenv", "run", "python", "machine_learning_client.py"]]
+CMD ["pipenv", "run", "python", "machine_learning_client.py"]
