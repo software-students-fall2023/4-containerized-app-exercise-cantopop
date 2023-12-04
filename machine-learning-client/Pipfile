@@ -4,24 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+opencv-python = "*"
+pymongo = "*"
+pytesseract = "*"
+pillow = "*"
+
+[dev-packages]
 pylint = "*"
 black = "*"
-flask = "*"
 tomli = "*"
 typing-extensions = "*"
 dill = "*"
-opencv-python-headless = "*"
-opencv-python = "*"
-pymongo = "*"
-pybase64 = "*"
-certifi = "*"
-pytesseract = "*"
-pillow = "*"
 pytest = "*"
-pytest-cov = "*"
-
-
-[dev-packages]
 
 [requires]
 python_version = "3.11"

@@ -27,7 +27,6 @@ This is the different configrations for tesseract
 """
 import time
 from io import BytesIO
-import certifi
 import pymongo
 import pytesseract
 from PIL import Image
@@ -37,19 +36,16 @@ def mlc(raw_image):
     """
     This is the main application of the ML client, we applied the use of Tesseract here.
     """
-    # This is the config I found most reliable, do not change!
-    # myconfig = r"--psm 6 --oem 3"
     try:
         img = Image.open(BytesIO(raw_image))
 
-        # Getting the words...
         try:
             text = pytesseract.image_to_string(img)
         # pylint: disable=broad-except
         # pylint: disable=unused-variable
         except Exception as e:
-            title = "tesseract not successfully installed"
-            content = "ERROR!"
+            title = "ERROR: Couldn't Scan"
+            content = "ERROR: Couldn't Scan"
             # Handle the specific exception
             return title, content
 
@@ -67,20 +63,15 @@ def mlc(raw_image):
         return title, content
     # pylint: disable=broad-except
     except Exception as e:
-        title = "tesseract not successfully installed"
-        content = "ERROR!"
+        title = "ERROR: Couldn't Scan"
+        content = "ERROR: Couldn't Scan"
         return title, content
 
 
 def connection(flag):
     """This is the connection client to MongoDB"""
     # Connecting to MongoDB
-    # pylint: disable=line-too-long
-    URI = "mongodb://mongodb:27017/"
-    # URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
-    client = pymongo.MongoClient(URI)
-    # mongourl = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
-    # client = MongoClient(mongourl)
+    client = pymongo.MongoClient("mongodb://mongodb:27017/")
     # Accessing
     database = client["note_app"]
     # Accessing
