@@ -9,6 +9,7 @@
 
 When taking notes in class, it can be stressful to try to jot down everything one sees on the slides the professor is presenting. This handy web app allows students to snap a quick picture of a slide that may be too much to write down manually, and the app will automatically convert the text in the image to a text note that can be later referenced. 
 
+
 ## Setp-up Instructions
 
 ### Step 1, Clone the directory:
@@ -35,6 +36,7 @@ Docker-compose up —build
 
 Now, you can access http://127.0.0.1:5000/, remeber to allow webcam for your web page
 
+
 ## User-guide
 
 ### Main Screen
@@ -56,6 +58,7 @@ Now, you can access http://127.0.0.1:5000/, remeber to allow webcam for your web
 - Use the search functionality to quickly find specific notes.
 - Enter of the note's title or the full title in the search bar to filter out notes.
 - Case sensitive
+
 
 ## Team Members
 
