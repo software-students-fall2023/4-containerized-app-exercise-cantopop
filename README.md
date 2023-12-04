@@ -59,6 +59,17 @@ Now, you can access http://localhost:5000/, remember to allow webcam for your we
 - Enter part of the note's title or the full title in the search bar to filter out notes.
 - Case sensitive
 
+## Digital Ocean
+You can access our app through
+```
+http://159.203.121.138:5000/
+```
+
+To enable cameras on chrome go to
+```
+chrome://flags/#unsafely-treat-insecure-origin-as-secure
+```
+Find "Insecure origins treated as secure", enable it and add our address to the list
 
 ## Team Members
 
