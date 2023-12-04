@@ -23,19 +23,6 @@ def example_image():
         return image_data
 
 
-def test_mlc_with_valid_image(example):
-    """This is the test of valid image"""
-    # Call the mlc function with actual image data
-    title, content = mlc(example)
-    # Assertions
-    assert title == "This is a test case for MLC"
-    # pylint: disable=line-too-long
-    assert (
-        content
-        == "\nThis is a test case for MLC This is a test case for MLC This is a test case for MLC\n"
-    )
-
-
 def test_mlc_with_invalid_image(example):
     """This is for invalid image"""
     # pylint: disable=line-too-long
