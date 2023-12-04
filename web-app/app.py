@@ -12,10 +12,11 @@ from pymongo.mongo_client import MongoClient
 
 app = Flask(__name__)
 # URI = os.getenv("MONGODB_URI")
-URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
+# URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
+URI = "mongodb://mongodb:27017/"
 app.config["MONGO_URI"] = URI
 
-connection = MongoClient(app.config["MONGO_URI"], tlsCAFile=certifi.where())
+connection = MongoClient(app.config["MONGO_URI"])
 db = connection["note_app"]
 notes = db.notes
 temp = db.temp

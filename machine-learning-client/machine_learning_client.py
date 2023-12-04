@@ -48,8 +48,8 @@ def mlc(raw_image):
         # pylint: disable=broad-except
         # pylint: disable=unused-variable
         except Exception as e:
-            title = "Cannot recognize title!"
-            content = "Cannot recognize main body!"
+            title = "tesseract not successfully installed"
+            content = "ERROR!"
             # Handle the specific exception
             return title, content
 
@@ -76,10 +76,9 @@ def connection(flag):
     """This is the connection client to MongoDB"""
     # Connecting to MongoDB
     # pylint: disable=line-too-long
-    client = pymongo.MongoClient(
-        "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority",
-        tlsCAFile=certifi.where(),
-    )
+    URI = "mongodb://mongodb:27017/"
+    # URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
+    client = pymongo.MongoClient(URI)
     # mongourl = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
     # client = MongoClient(mongourl)
     # Accessing
