@@ -1,4 +1,4 @@
-name: Web App (build/test)
+name: Web App (build/test/deploy)
 
 on:
   pull_request: 
@@ -31,7 +31,21 @@ jobs:
       run: |
         pipenv run pytest
 
+    - name: Log in to Docker Hub
+      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      with:
+        username: bailongzhao
+        password: aA710814!
+    
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+      with:
+        images: bailongzhao/easy_notes
     - name: Build Container
       run: |
         docker-compose build
         docker-compose up -d
+    - name: push Docker image
+      run: |
+        docker-compose push
