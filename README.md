@@ -20,3 +20,13 @@ Brad Yin: https://github.com/BREADLuVER
 Yucheng Xu: https://github.com/Yucheng-XPH
 
 ## Instructions
+### (1) To start docker use:
+Docker-compose down
+Docker-compose up —build
+
+### (2) To rerun docker use:
+Docker stop $(docker ps -a -q)
+Docker rm $(docker ps -a -q)
+docker rmi ($docker images -a -q)
+before repeating step 1
+
