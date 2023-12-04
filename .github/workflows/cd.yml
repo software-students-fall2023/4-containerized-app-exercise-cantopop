@@ -23,7 +23,8 @@ jobs:
           SSHPASS: ${{ secrets.SSHPASS }}
         run: |
           ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
-          sshpass -e ssh root@159.203.121.138 "
+          sshpass -e ssh root@159.203.121.138 
+          eval $(ssh-agent -s) "
             cd 4-containerized-app-exercise-cantopop &&
             git pull origin main &&
             docker-compose down &&
