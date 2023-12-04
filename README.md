@@ -65,7 +65,7 @@ To enable cameras on chrome go to
 chrome://flags/#unsafely-treat-insecure-origin-as-secure
 ```
 Find "Insecure origins treated as secure", enable it and add our address to the list
-![image](https://github.com/software-students-fall2023/4-containerized-app-exercise-cantopop/assets/91650640/7837f73a-4807-4a1a-a943-b92f0a35fb36)
+![image](https://github.com/software-students-fall2023/4-containerized-app-exercise-cantopop/assets/91650640/26ac9741-8aae-43e2-891a-50f1de0a4aa4)
 
 
 ## Team Members
