@@ -28,4 +28,4 @@ ENV MONGO_URI=mongodb://mongodb:27017
 
 # CMD ["python3", "machine_learning_code.py"]
 
-CMD ["pipenv", "run", "python", "machine_learning_code.py"]]
+CMD ["pipenv", "run", "python", "machine_learning_client.py"]]
