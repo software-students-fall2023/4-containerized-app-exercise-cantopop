@@ -60,7 +60,7 @@ Now, you can access http://localhost:5000/, remember to allow webcam for your we
 - Case sensitive
 
 ## Digital Ocean
-You can access our app through
+You can access our app through: http://159.203.121.138:5000/
 ```
 http://159.203.121.138:5000/
 ```
