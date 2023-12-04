@@ -31,3 +31,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name:  Build and push Docker image
+        run: |
+          docker tag 4-containerized-app-exercise-cantopop-app bailongzhao/easy_notes:web-app
+          docker push bailongzhao/easy_notes:web-app
+          docker tag 4-containerized-app-exercise-cantopop-ml bailongzhao/easy_notes:mlc
+          docker push bailongzhao/easy_notes:mlc
+          docker tag mongo bailongzhao/easy_notes:mongo
+          docker push bailongzhao/easy_notes:mongo
