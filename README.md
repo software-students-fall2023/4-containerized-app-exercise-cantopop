@@ -47,3 +47,20 @@ Now, you can access http://127.0.0.1:5000/, remeber to allow webcam for your web
 
 ## User-guide
 
+### Main Screen
+- The main screen serves as the dashboard and starting point.
+- From here, you can navigate to 3 different functionalities: all notes, add note, search note.
+
+### Adding Notes
+- Navigate to the “Add Notes” section from the main menu.
+- You can capture an image using your device's camera, which will interpreted by our ML function.
+- The extracted notes will be stored and can be accessed in all notes, search note
+
+### Viewing and Editing Notes
+- Access all your saved notes through the “View Notes” section.
+- Each note can be edited or deleted as per your requirement.
+- The machine learning client’s analysis (if applicable) will also be displayed alongside each note.
+
+### Searching Notes
+- Use the search functionality to quickly find specific notes.
+- Enter keywords or titles in the search bar to filter out notes.
