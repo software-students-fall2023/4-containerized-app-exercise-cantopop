@@ -21,7 +21,7 @@ services:
       - mongonetwork
   mongodb:
     image: bailongzhao/easy_notes:mongo
-    build: ./databse
+    build: ./database
     ports:
       - "27017:27017"
     volumes:
