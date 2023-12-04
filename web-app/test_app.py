@@ -3,7 +3,8 @@ Those are libraries for pytest (check app.py for their usage)
 """
 import os
 import pytest
-os.environ['TESTING'] = 'true'
+
+os.environ["TESTING"] = "true"
 # pylint: disable=wrong-import-position
 from app import app as flask_app
 
@@ -14,10 +15,12 @@ def create_app():
     app = flask_app
     return app
 
+
 @pytest.fixture(name="client")
 def create_connection(test_app):
     """Fixture to create a test client for the Flask app."""
     return test_app.test_client()
+
 
 @pytest.fixture(name="database")
 def creat_db(test_app):
@@ -27,6 +30,7 @@ def creat_db(test_app):
         db.notes.insert_one({"title": "Note Title", "main_body": "Test body"})
         yield db
         db.notes.delete_one({"title": "Note Title"})
+
 
 def test_show_main_screen(client):
     """Test showing the main screen."""
@@ -104,4 +108,4 @@ def test_add_notes_post(client, database):
     response = client.post("/add", data=new_note)
     database.notes.delete_many({})
     assert response.status_code == 200
-    os.environ.pop('TESTING', None)
+    os.environ.pop("TESTING", None)

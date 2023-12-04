@@ -12,7 +12,7 @@ from pymongo.mongo_client import MongoClient
 
 app = Flask(__name__)
 
-if os.getenv('TESTING'):
+if os.getenv("TESTING"):
     app.config["MONGO_CONN"] = mongomock.MongoClient()
 else:
     URI = "mongodb://mongodb:27017/"
@@ -177,5 +177,6 @@ def search_notes():
         return render_template("search_notes.html", message="Notes Not Found")
     return render_template("search_notes.html", docs=found, message="")
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
