@@ -1,7 +1,7 @@
 name: Machine Learning Client (build/test)
 
 on:
-  pull_request:
+  push:
     branches: [ "main" ]
 
 jobs:
