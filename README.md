@@ -54,13 +54,15 @@ Now, you can access http://127.0.0.1:5000/, remeber to allow webcam for your web
 ### Adding Notes
 - Navigate to the “Add Notes” section from the main menu.
 - You can capture an image using your device's camera, which will interpreted by our ML function.
-- The extracted notes will be stored and can be accessed in all notes, search note
+- You will then be redirected to a new page where the interpreted note title and body will be shown.
+- Click add note if they're sadisfactory. If successful, a success message will show.
+- The extracted notes will be stored and can be accessed in all notes, search note.
 
 ### Viewing and Editing Notes
 - Access all your saved notes through the “View Notes” section.
-- Each note can be edited or deleted as per your requirement.
-- The machine learning client’s analysis (if applicable) will also be displayed alongside each note.
+- Each note can be edited or deleted.
 
-### Searching Notes
+### Searching Notes (case sensitive)
 - Use the search functionality to quickly find specific notes.
-- Enter keywords or titles in the search bar to filter out notes.
+- Enter of the note's title or the full title in the search bar to filter out notes.
+- Case sensitive
