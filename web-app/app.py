@@ -4,19 +4,21 @@ flask: web-app frame work
 pymongo: provide connection to the mongodb
 os: retreiving env var
 """
-# import os
+import os
 import base64
-import certifi
+import mongomock
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo.mongo_client import MongoClient
 
 app = Flask(__name__)
-# URI = os.getenv("MONGODB_URI")
-# URI = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority"
-URI = "mongodb://mongodb:27017/"
-app.config["MONGO_URI"] = URI
 
-connection = MongoClient(app.config["MONGO_URI"])
+if os.getenv("TESTING"):
+    app.config["MONGO_CONN"] = mongomock.MongoClient()
+else:
+    URI = "mongodb://mongodb:27017/"
+    app.config["MONGO_CONN"] = MongoClient(URI)
+
+connection = app.config["MONGO_CONN"]
 db = connection["note_app"]
 notes = db.notes
 temp = db.temp
@@ -175,5 +177,6 @@ def search_notes():
         return render_template("search_notes.html", message="Notes Not Found")
     return render_template("search_notes.html", docs=found, message="")
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

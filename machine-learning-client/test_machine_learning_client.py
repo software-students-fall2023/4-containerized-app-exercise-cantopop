@@ -1,5 +1,4 @@
 """This is the testing module for machine_learning_client"""
-
 import os
 from unittest.mock import patch, MagicMock
 from PIL import Image
@@ -25,7 +24,6 @@ def example_image():
 
 def test_mlc_with_invalid_image(example):
     """This is for invalid image"""
-    # pylint: disable=line-too-long
     with patch(
         "machine_learning_client.pytesseract.image_to_string",
         side_effect=pytesseract.TesseractError(
@@ -35,8 +33,8 @@ def test_mlc_with_invalid_image(example):
         # Call the mlc function with invalid image data
         title, content = mlc(example)
         # Assertions
-        assert title == "Cannot recognize title!"
-        assert content == "Cannot recognize main body!"
+        assert title == "ERROR: Couldn't Scan"
+        assert content == "ERROR: Couldn't Scan"
 
 
 def test_connection_with_example_image(example):
@@ -59,7 +57,6 @@ def test_connection_with_example_image(example):
 def test_mlc_with_exception(example):
     """Testing nlc() exception handling"""
     # Mock the pytesseract.image_to_string function to raise an exception
-    # pylint: disable=line-too-long
     with patch(
         "machine_learning_client.pytesseract.image_to_string",
         side_effect=pytesseract.TesseractError(
@@ -68,8 +65,8 @@ def test_mlc_with_exception(example):
     ):
         title, content = mlc(example)
         # Assertions
-        assert title == "Cannot recognize title!"
-        assert content == "Cannot recognize main body!"
+        assert title == "ERROR: Couldn't Scan"
+        assert content == "ERROR: Couldn't Scan"
 
 
 def test_mlc_with_empty_image(example):
@@ -85,7 +82,6 @@ def test_mlc_with_empty_image(example):
 def test_mlc_with_multi_line_text(example):
     """When the line code is multiple lines"""
     # Mock the pytesseract.image_to_string function to return multi-line text
-    # pylint: disable=line-too-long
     with patch(
         "machine_learning_client.pytesseract.image_to_string",
         return_value="Line 1\nLine 2\nLine 3",
@@ -101,8 +97,8 @@ def test_mlc_with_invalid_image_format():
     # Call mlc with image data in an invalid format (e.g., not an image)
     title, content = mlc(b"InvalidImageData")
     # Assertions
-    assert title == "ERROR in raw_image format!"
-    assert content == "ERROR in raw_image format!"
+    assert title == "ERROR: Couldn't Scan"
+    assert content == "ERROR: Couldn't Scan"
 
 
 def test_main_with_flag_true():
@@ -117,6 +113,3 @@ def test_main_with_flag_false():
     with patch("machine_learning_client.connection") as mock_connection:
         main(flag=False)
         mock_connection.assert_called_once_with(False)
-
-
-# Run the tests with coverage using: pytest --cov=machine_learning_client --cov-report term-missing test_machine_learning_client.py

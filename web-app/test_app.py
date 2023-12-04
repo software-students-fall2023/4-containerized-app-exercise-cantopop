@@ -1,18 +1,18 @@
 """
 Those are libraries for pytest (check app.py for their usage)
-***certifi: to ensure that mongodb works under pipenv***
 """
+import os
 import pytest
+
+os.environ["TESTING"] = "true"
+# pylint: disable=wrong-import-position
 from app import app as flask_app
-from pymongo.mongo_client import MongoClient
-import certifi
 
 
 @pytest.fixture(name="test_app")
 def create_app():
     """Fixture to create a Flask app for testing."""
     app = flask_app
-    app.config["TESTING"] = True
     return app
 
 
@@ -26,9 +26,7 @@ def create_connection(test_app):
 def creat_db(test_app):
     """Fixture to set up and tear down a mock database for testing."""
     with test_app.app_context():
-        db = MongoClient(
-            test_app.config["MONGO_URI"], tlsCAFile=certifi.where()
-        ).note_app
+        db = test_app.config["MONGO_CONN"].note_app
         db.notes.insert_one({"title": "Note Title", "main_body": "Test body"})
         yield db
         db.notes.delete_one({"title": "Note Title"})
@@ -110,3 +108,4 @@ def test_add_notes_post(client, database):
     response = client.post("/add", data=new_note)
     database.notes.delete_many({})
     assert response.status_code == 200
+    os.environ.pop("TESTING", None)
