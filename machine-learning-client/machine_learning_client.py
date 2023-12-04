@@ -67,8 +67,8 @@ def mlc(raw_image):
         return title, content
     # pylint: disable=broad-except
     except Exception as e:
-        title = "ERROR in raw_image format!"
-        content = "ERROR in raw_image format!"
+        title = "tesseract not successfully installed"
+        content = "ERROR!"
         return title, content
 
 
