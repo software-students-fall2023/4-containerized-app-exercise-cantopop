@@ -173,3 +173,6 @@ def search_notes():
     if not found:
         return render_template("search_notes.html", message="Notes Not Found")
     return render_template("search_notes.html", docs=found, message="")
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
