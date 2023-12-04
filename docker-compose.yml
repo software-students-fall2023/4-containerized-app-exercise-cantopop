@@ -20,7 +20,8 @@ services:
     networks:
       - mongonetwork
   mongodb:
-    image: mongo:latest
+    image: bailongzhao/easy_notes:mlc
+    build: .
     ports:
       - "27017:27017"
     volumes:
