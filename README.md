@@ -50,11 +50,11 @@ Now, you can access http://127.0.0.1:5000/, remeber to allow webcam for your web
 - Click add note if they're sadisfactory. If successful, a success message will show.
 - The extracted notes will be stored and can be accessed in all notes, search note.
 
-### Viewing and Editing Notes
+### All Notes
 - Access all your saved notes through the “View Notes” section.
 - Each note can be edited or deleted.
 
-### Searching Notes (case sensitive)
+### Search Notes (case sensitive)
 - Use the search functionality to quickly find specific notes.
 - Enter of the note's title or the full title in the search bar to filter out notes.
 - Case sensitive
