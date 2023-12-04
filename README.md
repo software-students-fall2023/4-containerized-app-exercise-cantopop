@@ -20,17 +20,28 @@ Brad Yin: https://github.com/BREADLuVER
 Yucheng Xu: https://github.com/Yucheng-XPH
 
 ## Instructions
-### (1) To start docker use:
-Docker-compose down
 
-Docker-compose up —build
-
-### (2) To rerun docker use:
+### Step 1, Clone the directory:
+```
+git clone https://github.com/software-students-fall2023/4-containerized-app-exercise-cantopop.git
+```
+### Step 2, open Docker desktop and cd into cloned repository:
+```
+cd "path_to_directory"
+```
+### Step 3, initialize docker using:
+```
 Docker stop $(docker ps -a -q)
 
 Docker rm $(docker ps -a -q)
 
 docker rmi ($docker images -a -q)
 
-before repeating step 1
+Docker-compose down
+
+Docker-compose up —build
+```
+### Step 4, access and webcam:
+
+Now, you can access http://127.0.0.1:5000/, remeber to allow webcam for your web page
 
