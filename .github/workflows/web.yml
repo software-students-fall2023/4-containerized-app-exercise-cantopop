@@ -24,23 +24,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install pipenv
         cd web-app
-        pipenv --python ${{ matrix.python-version }}
-        pipenv lock 
-        pipenv install --dev
+        pipenv install
 
     - name: Testing with pytest
       run: |
         cd web-app
         pipenv run pytest
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-  
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Deploy to Production
-        run: |
-          docker-compose build
-          docker-compose up -d
+    - name: Build Container
+      run: |
+        docker-compose build
+        docker-compose up -d
