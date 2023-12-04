@@ -16,26 +16,21 @@ When taking notes in class, it can be stressful to try to jot down everything on
 ```
 git clone https://github.com/software-students-fall2023/4-containerized-app-exercise-cantopop.git
 ```
-### Step 2, open Docker Desktop and cd into cloned repository:
+### Step 2, Docker Compose:
 ```
-cd "web-app"
+docker-compose up --build
 ```
-### Step 3, initialize Docker using:
-```
-Docker stop $(docker ps -a -q)
-
-Docker rm $(docker ps -a -q)
-
-docker rmi ($docker images -a -q)
-
-Docker-compose down
-
-Docker-compose up —build
-```
-### Step 4, access and webcam:
-
+### Step 3, Access the web-app
 Now, you can access http://localhost:5000/, remember to allow webcam for your webpage.
-
+### Docker Hub
+Alternatively, You can also pull the images from the docker hub
+```
+docker pull bailongzhao/easy_notes
+```
+Download the docker-compose file from here and run 
+```
+docker-compose up
+```
 
 ## User-guide
 
