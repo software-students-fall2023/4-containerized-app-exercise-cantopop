@@ -2,8 +2,8 @@
 
 ## Badges
 
-![Python build & test](https://github.com/software-students-fall2023/4-containerized-app-exercise-cantopop/actions/workflows/containerized-app.yml/badge.svg) 
-
+![Python build & test](https://github.com/software-students-fall2023/4-containerized-app-exercise-cantopop/actions/workflows/web.yml/badge.svg) 
+![Python build & test](https://github.com/software-students-fall2023/4-containerized-app-exercise-cantopop/actions/workflows/mlc.yml/badge.svg) 
 
 ## Description
 
