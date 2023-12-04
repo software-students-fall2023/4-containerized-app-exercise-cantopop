@@ -12,24 +12,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Create SSH directory
-        run: mkdir -p ~/.ssh
-
       - name: Deploy to Digital Ocean
-        env:
-          SSHPASS: ${{ secrets.SSHPASS }}
         run: |
+          mkdir -p ~/.ssh
           ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
-          sshpass -e ssh root@159.203.121.138 
-          eval $(ssh-agent -s) "
-            cd 4-containerized-app-exercise-cantopop &&
-            git pull origin main &&
-            docker-compose down &&
-            docker-compose up -d --build
-          "
+          sshpass -p 'Cd#234GG' ssh -o StrictHostKeyChecking=no root@159.203.121.138 "
+          cd 4-containerized-app-exercise-cantopo && 
+          docker-compose down && 
+          git pull origin main && 
+          docker-compose build --no-cache && 
+          docker-compose up "|| true
 
 
 
