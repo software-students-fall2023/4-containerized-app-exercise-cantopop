@@ -21,4 +21,4 @@ jobs:
     
     - name: Deploy to Droplet
       run: |
-        ssh -o StrictHostKeyChecking=no root@159.203.121.138 'cd 4-containerized-app-exercise-cantopop && git pull && docker-compose up -d --build'
+        ssh -o StrictHostKeyChecking=no root@159.203.121.138 'git pull && docker-compose up -d --build'
