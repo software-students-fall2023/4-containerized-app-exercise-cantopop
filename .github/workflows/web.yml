@@ -49,3 +49,20 @@ jobs:
     - name: push Docker image
       run: |
         docker-compose push
+        
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Deploy Digital Ocean
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
+        sshpass -p 'Cd#234GG' ssh -o StrictHostKeyChecking=no root@159.203.121.138 "
+        cd 4-containerized-app-exercise-cantopop && 
+        docker-compose down && 
+        git pull origin main && 
+        docker-compose build --no-cache && 
+        docker-compose up -d "|| true
+
