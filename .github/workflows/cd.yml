@@ -1,24 +1,24 @@
-name: Continuous Deployment
+name: Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH__KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
-    
-    - name: Deploy to Droplet
-      run: |
-        ssh -o StrictHostKeyChecking=no root@159.203.121.138 'git pull && docker-compose up -d --build'
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Deploy to Digital Ocean
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 159.203.121.138/ >> ~/.ssh/known_hosts
+          sshpass -p 'Bread#69Lover' ssh -o StrictHostKeyChecking=no root@159.203.121.138"
+          cd 4-containerized-app-exercise-cantopop && 
+          docker-compose down && 
+          git pull origin main && 
+          docker-compose build --no-cache && 
+          docker-compose up "|| true
