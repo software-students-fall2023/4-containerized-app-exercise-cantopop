@@ -12,11 +12,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create SSH directory
         run: mkdir -p ~/.ssh
+
       - name: Deploy to Digital Ocean
+        env:
+          SSHPASS: ${{ secrets.SSHPASS }}
         run: |
-          export SSHPASS='Cd#234GG'
           ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
           sshpass -e ssh root@159.203.121.138 "
             cd 4-containerized-app-exercise-cantopop &&
@@ -24,5 +29,6 @@ jobs:
             docker-compose down &&
             docker-compose up -d --build
           "
+
 
 
