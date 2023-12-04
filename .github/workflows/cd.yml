@@ -12,7 +12,9 @@ jobs:
     steps:
       - name: Repository
         uses: actions/checkout@v2
-      - name: Digital Ocean
+      - name: Create SSH directory
+        run: mkdir -p ~/.ssh
+      - name: Deploy DO
         run: |
           export SSHPASS='Cd#234GG'
           ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
