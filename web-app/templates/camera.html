@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        } 
+
+        header {
+            background-color: #57068c;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        video {
+            width: 100%; /* Makes the video width responsive to the container size */
+            max-width: 640px; /* Maximum width of the video */
+            height: auto; /* Adjusts the height to maintain the aspect ratio */
+            display: block; /* Ensures the video is a block-level element */
+            margin: 0 auto; /* Centers the video horizontally and adds no margin vertically */
+            margin-bottom: 20px; /* Space below the video */
+            border: 3px solid #a1a1a1; /* Example: 3px solid black border */
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body onload="startCamera();">
+    <header>
+        <h1>✏️ Add Note</h1>
+    </header>
+    <main>
+        <div class="video-container">
+            <video id="video" width="640" autoplay></video><br>
+            <a href="{{ url_for('show_add_notes') }}"><button id="capture" onclick="captureImage()" style="margin-bottom: 10px;">Capture Image</button></a>
+            <a href="{{ url_for('show_main_screen') }}"><button style="background-color: #3a3a3a;">Back</button></a>
+        </div>
+    </main>
+</body>
+<script>
+    let videoStream;
+    function startCamera() {
+        const video = document.getElementById('video');
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    videoStream = stream;
+                    video.srcObject = stream;
+                })
+                .catch(function (error) {
+                    console.log("Error accessing camera: ", error);
+                });
+        } else {
+            console.log("Camera not supported");
+        }
+    }
+
+    function captureImage() {
+        const video = document.getElementById('video');
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL('image/jpeg');
+
+        fetch('/upload_image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ imageData: dataURL })
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,35 @@
+version: "3.10"
+
+services:
+  app:
+    image: bailongzhao/easy_notes:web-app
+    build: ./web-app  
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    networks:
+      - mongonetwork
+  ml:
+    image: bailongzhao/easy_notes:mlc
+    build: ./machine-learning-client
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+    networks:
+      - mongonetwork
+  mongodb:
+    image: bailongzhao/easy_notes:mongo
+    build: ./database
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - mongonetwork
+volumes:
+  mongodata:
+networks:
+  mongonetwork:
+

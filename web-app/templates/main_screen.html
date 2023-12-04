@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Notes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #57068c;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .option {
+            display: block;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: rgb(209, 209, 209);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📜 Easy Note</h1>
+    </header>
+
+    <main>
+        <a href="{{ url_for('show_all_notes') }}" class="option"> <h1>📘</h1>  <h2>All Notes</h2></a>
+        <a href="{{ url_for('capture_image') }}" class="option"> <h1>✏️</h1> <h2>Add Notes</h2></a>
+        <a href="{{ url_for('show_search_notes') }}" class="option"><h1>❓</h1>  <h2>Search Notes</h2> </a>
+    </main>
+</body>
+</html>
