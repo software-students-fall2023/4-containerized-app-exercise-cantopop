@@ -16,10 +16,10 @@ jobs:
         run: mkdir -p ~/.ssh
       - name: Deploy to Digital Ocean
         run: |
-          export SSHPASS='Cd#234GG'
-          ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
-          sshpass -e ssh -t root@159.203.121.138 "cd 4-containerized-app-exercise-cantopop"
-          sshpass -e ssh -t root@159.203.121.138 "git pull"
-          sshpass -e ssh -t root@159.203.121.138 "docker-compose down"
-          sshpass -e ssh -t root@159.203.121.138 "docker-compose up -d --build"
+          ssh -o StrictHostKeyChecking=no root@159.203.121.138 "\
+            cd 4-containerized-app-exercise-cantopop && \
+            git pull origin main && \
+            docker-compose down && \
+            docker-compose up -d --build \
+          "
 
