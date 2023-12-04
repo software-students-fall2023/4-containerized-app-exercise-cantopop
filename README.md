@@ -34,7 +34,7 @@ Docker-compose up —build
 ```
 ### Step 4, access and webcam:
 
-Now, you can access http://127.0.0.1:5000/, remember to allow webcam for your webpage.
+Now, you can access http://localhost:5000/, remember to allow webcam for your webpage.
 
 
 ## User-guide
