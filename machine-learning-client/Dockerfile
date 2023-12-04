@@ -12,7 +12,11 @@ COPY . .
 
 # RUN pip install 
 
-
+# Install Tesseract OCR
+RUN apt-get update && \
+    apt-get install -y tesseract-ocr && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 
 RUN pip install pipenv
@@ -22,11 +26,6 @@ RUN pipenv install
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Tesseract OCR
-RUN apt-get update && \
-    apt-get install -y tesseract-ocr && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 EXPOSE 3001
 
