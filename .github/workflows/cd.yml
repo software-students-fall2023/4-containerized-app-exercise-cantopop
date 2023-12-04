@@ -17,7 +17,8 @@ jobs:
       - name: Deploy to Digital Ocean
         run: |
           export SSHPASS='Cd#234GG'
-          ssh -o StrictHostKeyChecking=no root@159.203.121.138 "
+          ssh-keyscan -H 159.203.121.138 >> ~/.ssh/known_hosts
+          sshpass -e ssh root@159.203.121.138 "
             cd 4-containerized-app-exercise-cantopop &&
             git pull origin main &&
             docker-compose down &&
