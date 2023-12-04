@@ -42,7 +42,7 @@ ENV MONGODB_DATABASE="notes_app"
 
 # CMD [ "python3", "-m" , "flask", "run"]
 
-CMD [ "pipenv", "run", "flask", "run"]
+CMD [ "pipenv", "run", "python", "app.py"]
 
 # RUN ["flask", "run"]
 # ENTRYPOINT ["flask"]
