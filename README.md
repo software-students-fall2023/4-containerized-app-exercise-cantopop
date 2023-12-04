@@ -19,7 +19,7 @@ Brad Yin: https://github.com/BREADLuVER
 
 Yucheng Xu: https://github.com/Yucheng-XPH
 
-## Instructions
+## Setp-up Instructions
 
 ### Step 1, Clone the directory:
 ```
@@ -44,4 +44,6 @@ Docker-compose up —build
 ### Step 4, access and webcam:
 
 Now, you can access http://127.0.0.1:5000/, remeber to allow webcam for your web page
+
+## User-guide
 
