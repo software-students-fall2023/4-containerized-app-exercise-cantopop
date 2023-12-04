@@ -18,7 +18,7 @@ git clone https://github.com/software-students-fall2023/4-containerized-app-exer
 ```
 ### Step 2, open Docker Desktop and cd into cloned repository:
 ```
-cd "path_to_directory"
+cd "web-app"
 ```
 ### Step 3, initialize Docker using:
 ```
