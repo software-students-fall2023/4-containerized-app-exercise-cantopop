@@ -31,7 +31,7 @@ jobs:
     - name: Testing with pytest
       run: |
         cd web-app
-        pipenv run python -m pytest
+        pipenv run pytest
 
   deploy:
     needs: build
