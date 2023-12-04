@@ -77,7 +77,7 @@ def connection(flag):
     # Connecting to MongoDB
     # pylint: disable=line-too-long
     client = pymongo.MongoClient(
-        "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE",
+        "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority",
         tlsCAFile=certifi.where(),
     )
     # mongourl = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
