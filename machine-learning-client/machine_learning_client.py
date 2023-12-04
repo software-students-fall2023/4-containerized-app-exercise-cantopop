@@ -27,7 +27,8 @@ This is the different configrations for tesseract
 """
 import time
 from io import BytesIO
-from pymongo import MongoClient
+import certifi
+import pymongo
 import pytesseract
 from PIL import Image
 
@@ -75,8 +76,12 @@ def connection(flag):
     """This is the connection client to MongoDB"""
     # Connecting to MongoDB
     # pylint: disable=line-too-long
-    mongourl = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
-    client = MongoClient(mongourl)
+    client = pymongo.MongoClient(
+        "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE",
+        tlsCAFile=certifi.where(),
+    )
+    # mongourl = "mongodb+srv://admin:admin123@cluster0.m5t5gvu.mongodb.net/?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
+    # client = MongoClient(mongourl)
     # Accessing
     database = client["note_app"]
     # Accessing
