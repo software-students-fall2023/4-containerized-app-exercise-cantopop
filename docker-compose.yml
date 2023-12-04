@@ -6,9 +6,9 @@ services:
     build: ./web-app  # Points to the web-app directory containing the Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - FLASK_APP=main.py
-      - DB_URL=mongodb://mongodb:27017
+    # environment:
+      # - FLASK_APP=main.py
+      # - DB_URL=mongodb://mongodb:27017
     volumes:
       - ./web-app:/app  # Mounts the web-app directory to the container's /app directory
     depends_on:
@@ -22,10 +22,10 @@ services:
       - mongodb
 
   mongodb:
-    # container_name: db
     image: mongo:latest
     # volumes:
       # - ./db/languages.js:/docker-entrypoint-languages.d/languages.js:ro 
     ports:
       - "27017:27017"
+
 
